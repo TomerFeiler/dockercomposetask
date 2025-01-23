@@ -1,0 +1,22 @@
+FROM alpine:3.11.13
+
+RUN apk add --no-cache \
+    python2 \
+    py2-pip \
+    npm \
+    bash \
+    && python2 -m ensurepip --upgrade \
+    && pip install --no-cache --upgrade pip
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN pip install -r requirements.txt
+
+COPY . /app/
+
+EXPOSE 80
+
+
+ENTRYPOINT ["python2", "app.py"]
